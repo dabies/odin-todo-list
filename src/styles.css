@@ -1,0 +1,123 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  /* 2. Remove default margin */
+  * {
+    margin: 0;
+  }
+  
+  body {
+    /* 3. Add accessible line-height */
+    line-height: 1.5;
+    /* 4. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* 5. Improve media defaults */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* 6. Inherit fonts for form controls */
+  input, button, textarea, select {
+    font: inherit;
+  }
+  
+  /* 7. Avoid text overflows */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  
+  /* 8. Improve line wrapping */
+  p {
+    text-wrap: pretty;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+  
+  /*
+    9. Create a root stacking context
+  */
+  #root, #__next {
+    isolation: isolate;
+  }
+
+body {
+    background-color: lightpink;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    height: 100vh;
+}
+
+.sidebar {
+    display: grid;
+    background-color: lightblue;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.text {
+    justify-self: center;
+    margin-top: 20px;
+}
+
+.plus {
+  --b: 4px; /* the thickness */
+  width: 35px; /* the size */
+  aspect-ratio: 1;
+  border: 10px solid #076326; /* the outer space */
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#046414 90deg,#fff 0) 
+    calc(100% + var(--b)/2) calc(100% + var(--b)/2)/
+    calc(50%  + var(--b))   calc(50%  + var(--b));
+  display: inline-block;
+  position: relative;
+  top: 10px;
+}
+
+.radius {
+  border-radius: 50%;
+}
+
+.add-project:hover {
+    position: relative;
+    bottom: 1px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    background-color: lightpink;
+    padding: 30px;
+}
+
+li {
+    list-style: none;
+    font-size: 1.5em;
+}
+
+.project {
+    height: 45vh;
+    width: 45vh;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 30px;
+    background-color: lightsteelblue;
+    border-radius: 20px;
+    border-color: lightgray;
+}
+
+.content button {
+    border-radius: 5px;
+    padding: 10px;
+}
