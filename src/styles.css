@@ -58,6 +58,7 @@ body {
 
 .sidebar {
     display: grid;
+    width: 25vw;
     background-color: lightblue;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
@@ -86,7 +87,7 @@ body {
   border-radius: 50%;
 }
 
-.add-project:hover {
+.project-list:hover {
     position: relative;
     bottom: 1px;
 }
@@ -106,8 +107,8 @@ li {
 }
 
 .project {
-    height: 45vh;
-    width: 45vh;
+    height: 50vh;
+    width: 50vh;
     display: flex;
     flex-direction: column;
     gap: 5px;
