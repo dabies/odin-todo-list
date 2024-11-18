@@ -13,14 +13,14 @@ function addProject() {
     let projDate = $projectDate.value;
     let projPriority = $projectPriority.value;
 
-    let newProject = document.createElement('li');
+    let newProject = document.createElement('button');
     newProject.textContent = `${nameValue}`;
     if (projPriority === 'Low') {
-        newProject.color = 'green';
+        newProject.style.backgroundColor = 'lightgreen';
     } else if (projPriority === 'Medium') {
-        newProject.color = 'yellow';
+        newProject.style.backgroundColor = 'yellow';
     } else {
-        newProject.color = 'red';
+        newProject.style.backgroundColor = 'indianred';
     }
     $projectList.appendChild(newProject);
     

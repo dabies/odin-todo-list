@@ -68,6 +68,20 @@ function clearProjectDiv() {
     $contentDiv.removeChild($newProjectDiv);
 }
 
+function setPriorityColor(priority) {
+    if (priority === 'Low') {
+        return 'lightgreen';
+    } else if (priority === 'Medium') {
+        return 'yellow';
+    } else {
+        return 'indianred';
+    }
+}
+
+function clearInput() {
+    document.getElementById('taskInput').value = '';
+}
+
 function displayProjectPage() {
     //get form elements
     let $title = document.getElementById('name');
@@ -86,13 +100,16 @@ function displayProjectPage() {
     projPriority.textContent = `Priority: ${priority}`;
     let addingDiv = document.createElement('div');
     addingDiv.classList.add('list-div');
+    addingDiv.style.backgroundColor = setPriorityColor(priority);
     let addingDivInput = document.createElement('input');
     addingDivInput.type = 'text';
     addingDivInput.setAttribute('id', 'taskInput');
+    addingDivInput.setAttribute('placeholder', 'Add a task...');
     let addingDivButton = document.createElement('button');
     addingDivButton.textContent = 'Add';
     addingDivButton.classList.add('add-task-button');
     let toDoList = document.createElement('ul');
+    toDoList.classList.add('to-do-list');
     //append elements to page
     $contentDiv.appendChild(projTitle);
     $contentDiv.appendChild(projDate);
@@ -104,10 +121,26 @@ function displayProjectPage() {
 }
 
 function addTask(name) {
-    let $taskList = document.querySelector('.list-div');
-    let task = document.createElement('li');
-    task.textContent = `${name}`;
-    $taskList.appendChild(task);
+    if (name === '') {
+        clearInput();
+    } else {
+        let $taskList = document.querySelector('.to-do-list');
+        let task = document.createElement('li');    
+        let span = document.createElement("span");
+        span.textContent = ('X');
+        span.classList.add('close');
+        span.addEventListener('click', (e) => {
+            removeTask(e);
+        });
+        task.textContent = `${name}`;
+        task.appendChild(span);
+        $taskList.appendChild(task);
+        clearInput();
+    }
+}
+
+function removeTask(event) {
+    event.target.parentElement.parentElement.removeChild(event.target.parentElement);
 }
 
 export {displayNewProjectForm, clearProjectDiv, displayProjectPage, addTask }

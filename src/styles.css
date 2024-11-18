@@ -57,11 +57,27 @@ body {
 }
 
 .sidebar {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
     width: 25vw;
-    background-color: lightblue;
+    background-color: rgb(156, 168, 180);
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
+}
+
+.sidebar button {
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid lightslategray;
+    padding: 8px;
+}
+
+.add-project-btn-sidebar {
+    border-radius: 15px;
+    border: 1px solid lightslategray;
+    padding: 10px;
+    background-color: rgb(149, 155, 202);
 }
 
 .text {
@@ -87,9 +103,54 @@ body {
   border-radius: 50%;
 }
 
-.project-list:hover {
+.sidebar button:hover {
     position: relative;
     bottom: 1px;
+}
+
+.list-div {
+    display: flex;
+    justify-content: center;
+    width: 40vw;
+    height: 15vh;
+    padding: 5vh;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.list-div input {
+    width: 30vw;
+}
+
+.to-do-list {
+    position: relative;
+    bottom: 1.5vh;
+    width: 40vw;
+}
+
+.content ul {
+    position: relative;
+    right: 1.55vw;
+    width: 43.1vw;
+}
+
+.content ul li:hover {
+    background-color: #a8a7a7;
+}
+
+.content ul li:checked {
+    background: #888;
+    color: #fff;
+    text-decoration: line-through;
+}
+
+.to-do-list li {
+    background-color: #eee;
+    padding: 5px;
+}
+
+.to-do-list li:nth-child(odd) {
+    background-color: rgb(199, 198, 198);
 }
 
 .content {
@@ -102,6 +163,7 @@ body {
 }
 
 li {
+    position: relative;
     list-style: none;
     font-size: 1.5em;
 }
@@ -121,4 +183,16 @@ li {
 .content button {
     border-radius: 5px;
     padding: 10px;
+}
+
+.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.4vw 0.5vw;
+}
+  
+.close:hover {
+    background-color: #f44336;
+    color: white;
 }
