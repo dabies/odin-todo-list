@@ -63,9 +63,11 @@ function displayNewProjectForm() {
     $contentDiv.appendChild($newProjectDiv);
 };
 
-function clearProjectDiv() {
-    let $newProjectDiv = document.querySelector('.new-project-div');
-    $contentDiv.removeChild($newProjectDiv);
+function clearContent() {
+    let $contentDiv = document.querySelector('.content');
+    while ($contentDiv.firstChild) {
+        $contentDiv.removeChild($contentDiv.firstChild);
+    }
 }
 
 function setPriorityColor(priority) {
@@ -82,14 +84,14 @@ function clearInput() {
     document.getElementById('taskInput').value = '';
 }
 
-function displayProjectPage() {
-    //get form elements
-    let $title = document.getElementById('name');
-    let title = $title.value;
-    let $date = document.getElementById('date');
-    let date = $date.vaue;
-    let $priority = document.getElementById('priority');
-    let priority = $priority.value;
+function displayProjectPage(title, date, priority) {
+    // //get form elements
+    // let $title = document.getElementById('name');
+    // let title = $title.value;
+    // let $date = document.getElementById('date');
+    // let date = $date.vaue;
+    // let $priority = document.getElementById('priority');
+    // let priority = $priority.value;
 
     //create elements
     let projTitle = document.createElement('h1');
@@ -133,16 +135,25 @@ function addTask(name) {
             removeTask(e);
         });
         task.textContent = `${name}`;
+        addCheckedToggle(task);
         task.appendChild(span);
         $taskList.appendChild(task);
         clearInput();
     }
 }
 
+function addCheckedToggle(node) {
+    node.addEventListener('click', function(ev) {
+        if (ev.target.tagName === 'LI') {
+          ev.target.classList.toggle('checked');
+        }
+      }, false);
+}
+
 function removeTask(event) {
     event.target.parentElement.parentElement.removeChild(event.target.parentElement);
 }
 
-export {displayNewProjectForm, clearProjectDiv, displayProjectPage, addTask }
+export {displayNewProjectForm, clearContent, displayProjectPage, addTask }
 
 
