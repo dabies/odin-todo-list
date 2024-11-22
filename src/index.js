@@ -1,6 +1,7 @@
 import './styles.css';
 import { displayNewProjectForm, clearContent, displayProjectPage, addTask } from './content';
 import { addProject } from './sidebar';
+import { format } from 'date-fns';
 
 //cache DOM
 const $addProjectBtnSidebar = document.querySelector('.add-project-btn-sidebar');
@@ -16,7 +17,7 @@ $addProjectBtnSidebar.addEventListener('click', () => {
         let $title = document.getElementById('name');
         let title = $title.value;
         let $date = document.getElementById('date');
-        let date = $date.vaue;
+        let date = format($date.value, 'MM-dd-yyyy');
         let $priority = document.getElementById('priority');
         let priority = $priority.value;
         clearContent();

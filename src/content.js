@@ -19,6 +19,7 @@ function displayNewProjectForm() {
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('id', 'name');
     nameInput.setAttribute('name', 'name');
+    nameInput.setAttribute('maxlength', '40');
     //label and input for date
     const dateLabel = document.createElement('label');
     dateLabel.setAttribute('for', 'date');
@@ -27,6 +28,8 @@ function displayNewProjectForm() {
     dateInput.setAttribute('type', 'text');
     dateInput.setAttribute('id', 'date');
     dateInput.setAttribute('name', 'date');
+    dateInput.setAttribute('placeholder', 'MM-dd-yyyy');
+    dateInput.setAttribute('maxlength', '10');
     //label and input for priority selector and options
     const priorityLabel = document.createElement('label');
     priorityLabel.setAttribute('for', 'priority');
@@ -107,6 +110,7 @@ function displayProjectPage(title, date, priority) {
     addingDivInput.type = 'text';
     addingDivInput.setAttribute('id', 'taskInput');
     addingDivInput.setAttribute('placeholder', 'Add a task...');
+    addingDivInput.setAttribute('maxlength', '50');
     let addingDivButton = document.createElement('button');
     addingDivButton.textContent = 'Add';
     addingDivButton.classList.add('add-task-button');
