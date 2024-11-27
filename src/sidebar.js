@@ -1,3 +1,6 @@
+import { Project, clearContent } from './content';
+import { format } from 'date-fns';
+
 //cache DOM
 const $contentDiv = document.querySelector('.content');
 const $sidebarDiv = document.querySelector('.sidebar');
@@ -10,19 +13,29 @@ function addProject() {
     const $projectDate = document.querySelector('#date');
     const $projectPriority = document.querySelector('#priority');
     let nameValue = $projectName.value;
-    let projDate = $projectDate.value;
-    let projPriority = $projectPriority.value;
+    let dateValue = format($projectDate.value, 'MM-dd-yyyy');
+    let priorityValue = $projectPriority.value;
 
-    let newProject = document.createElement('button');
-    newProject.textContent = `${nameValue}`;
-    if (projPriority === 'Low') {
-        newProject.style.backgroundColor = 'lightgreen';
-    } else if (projPriority === 'Medium') {
-        newProject.style.backgroundColor = 'yellow';
+    let projectSidebarBtn = document.createElement('button');
+    projectSidebarBtn.textContent = `${nameValue}`;
+    if (priorityValue === 'Low') {
+        projectSidebarBtn.style.backgroundColor = 'lightgreen';
+    } else if (priorityValue === 'Medium') {
+        projectSidebarBtn.style.backgroundColor = 'yellow';
     } else {
-        newProject.style.backgroundColor = 'indianred';
+        projectSidebarBtn.style.backgroundColor = 'indianred';
     }
-    $projectList.appendChild(newProject);
+
+    let newProject = new Project(nameValue, dateValue, priorityValue);
+
+    projectSidebarBtn.addEventListener('click', () => {
+        clearContent();
+        newProject.display();
+    })
+
+
+
+    $projectList.appendChild(projectSidebarBtn);
     
 }
 

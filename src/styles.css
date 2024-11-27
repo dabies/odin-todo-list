@@ -207,6 +207,14 @@ li {
   background-color: #bbb;
 }
 
+.delete {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
 .close {
     position: absolute;
     right: 0;

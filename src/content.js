@@ -1,5 +1,8 @@
+import { format } from 'date-fns'
 //cache DOM
 const $contentDiv = document.querySelector('.content');
+const $sidebarDiv = document.querySelector('.sidebar');
+const $projectList = document.querySelector('.projects');
 
 //function for creating project display for
 function displayNewProjectForm() {
@@ -87,63 +90,103 @@ function clearInput() {
     document.getElementById('taskInput').value = '';
 }
 
-function displayProjectPage(title, date, priority) {
-    // //get form elements
-    // let $title = document.getElementById('name');
-    // let title = $title.value;
-    // let $date = document.getElementById('date');
-    // let date = $date.vaue;
-    // let $priority = document.getElementById('priority');
-    // let priority = $priority.value;
+class Project {
+    constructor(title, date, priority) {
+        this.title = title;
+        this.date = date;
+        this.priority = priority;
+        this.titleHeader = document.createElement('h1');
+        this.dateHeader = document.createElement('h3');
+        this.priorityHeader = document.createElement('h3');
+        this.addingDiv = document.createElement('div');
+        this.addingDivInput = document.createElement('input');
+        this.addingDivButton = document.createElement('button');
+        this.toDoList = document.createElement('ul');
+        this.projectSidebarBtn = document.createElement('button');
+    }
 
     //create elements
-    let projTitle = document.createElement('h1');
-    projTitle.textContent = `${title}`;
-    let projDate = document.createElement('h3');
-    projDate.textContent = `Due Date: ${date}`;
-    let projPriority = document.createElement('h3');
-    projPriority.textContent = `Priority: ${priority}`;
-    let addingDiv = document.createElement('div');
-    addingDiv.classList.add('list-div');
-    addingDiv.style.backgroundColor = setPriorityColor(priority);
-    let addingDivInput = document.createElement('input');
-    addingDivInput.type = 'text';
-    addingDivInput.setAttribute('id', 'taskInput');
-    addingDivInput.setAttribute('placeholder', 'Add a task...');
-    addingDivInput.setAttribute('maxlength', '50');
-    let addingDivButton = document.createElement('button');
-    addingDivButton.textContent = 'Add';
-    addingDivButton.classList.add('add-task-button');
-    let toDoList = document.createElement('ul');
-    toDoList.classList.add('to-do-list');
-    //append elements to page
-    $contentDiv.appendChild(projTitle);
-    $contentDiv.appendChild(projDate);
-    $contentDiv.appendChild(projPriority);
-    addingDiv.appendChild(addingDivInput);
-    addingDiv.appendChild(addingDivButton);
-    $contentDiv.appendChild(addingDiv);
-    $contentDiv.appendChild(toDoList);
+    display() {
+        this.titleHeader.textContent = `${this.title}`;
+        this.dateHeader.textContent = `Due Date: ${this.date}`;
+        this.priorityHeader.textContent = `Priority: ${this.priority}`;
+        this.addingDiv.classList.add('list-div');
+        this.addingDiv.style.backgroundColor = setPriorityColor(this.priority);
+        this.addingDivInput.type = 'text';
+        this.addingDivInput.setAttribute('id', 'taskInput');
+        this.addingDivInput.setAttribute('placeholder', 'Add a task...');
+        this.addingDivInput.setAttribute('maxlength', '50');
+        this.addingDivButton.textContent = 'Add';
+        this.addingDivButton.classList.add('add-task-button');
+        this.toDoList.classList.add('to-do-list');
+        let deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('delete');
+        deleteBtn.textContent = 'Remove Project';
+        deleteBtn.addEventListener('click', () => {
+            this.eraseAll();
+        });
+        //append elements to page
+        $contentDiv.appendChild(this.titleHeader);
+        $contentDiv.appendChild(this.dateHeader);
+        $contentDiv.appendChild(this.priorityHeader);
+        this.addingDiv.appendChild(this.addingDivInput);
+        this.addingDiv.appendChild(this.addingDivButton);
+        $contentDiv.appendChild(this.addingDiv);
+        $contentDiv.appendChild(this.toDoList);
+        $contentDiv.appendChild(deleteBtn);
+    }
+
+    addToSidebar() {
+        //values of new project
+        let nameValue = this.title;
+        let dateValue = format(this.date, 'MM-dd-yyyy');
+        let priorityValue = this.priority;
+    
+        this.projectSidebarBtn.textContent = `${nameValue}`;
+        if (priorityValue === 'Low') {
+            this.projectSidebarBtn.style.backgroundColor = 'lightgreen';
+        } else if (priorityValue === 'Medium') {
+            this.projectSidebarBtn.style.backgroundColor = 'yellow';
+        } else {
+            this.projectSidebarBtn.style.backgroundColor = 'indianred';
+        }
+
+        this.projectSidebarBtn.addEventListener('click', () => {
+            clearContent();
+            this.display();
+        })
+
+        $projectList.appendChild(this.projectSidebarBtn);
+    }
+
+    addTask(taskName) {
+        if (taskName === '') {
+            clearInput();
+        } else {
+            let $taskList = document.querySelector('.to-do-list');
+            let task = document.createElement('li');    
+            let span = document.createElement("span");
+            span.textContent = ('X');
+            span.classList.add('close');
+            span.addEventListener('click', (e) => {
+                removeTask(e);
+            });
+            task.textContent = `${taskName}`;
+            addCheckedToggle(task);
+            task.appendChild(span);
+            $taskList.appendChild(task);
+            clearInput();
+        }
+    }
+
+    eraseAll() {
+        clearContent();
+        $projectList.removeChild(this.projectSidebarBtn);
+    }
 }
 
-function addTask(name) {
-    if (name === '') {
-        clearInput();
-    } else {
-        let $taskList = document.querySelector('.to-do-list');
-        let task = document.createElement('li');    
-        let span = document.createElement("span");
-        span.textContent = ('X');
-        span.classList.add('close');
-        span.addEventListener('click', (e) => {
-            removeTask(e);
-        });
-        task.textContent = `${name}`;
-        addCheckedToggle(task);
-        task.appendChild(span);
-        $taskList.appendChild(task);
-        clearInput();
-    }
+function removeTask(event) {
+    event.target.parentElement.parentElement.removeChild(event.target.parentElement);
 }
 
 function addCheckedToggle(node) {
@@ -154,10 +197,6 @@ function addCheckedToggle(node) {
       }, false);
 }
 
-function removeTask(event) {
-    event.target.parentElement.parentElement.removeChild(event.target.parentElement);
-}
-
-export {displayNewProjectForm, clearContent, displayProjectPage, addTask }
+export {displayNewProjectForm, clearContent, Project }
 
 

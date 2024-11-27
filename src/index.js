@@ -1,5 +1,5 @@
 import './styles.css';
-import { displayNewProjectForm, clearContent, displayProjectPage, addTask } from './content';
+import { displayNewProjectForm, clearContent, Project } from './content';
 import { addProject } from './sidebar';
 import { format } from 'date-fns';
 
@@ -13,7 +13,6 @@ $addProjectBtnSidebar.addEventListener('click', () => {
     displayNewProjectForm();
     const $addProjectBtnContent = document.querySelector('.add-project-btn-content');
     $addProjectBtnContent.addEventListener('click', () => {
-        addProject();
         let $title = document.getElementById('name');
         let title = $title.value;
         let $date = document.getElementById('date');
@@ -21,12 +20,14 @@ $addProjectBtnSidebar.addEventListener('click', () => {
         let $priority = document.getElementById('priority');
         let priority = $priority.value;
         clearContent();
-        displayProjectPage(title, date, priority);
+        let newProject = new Project(title, date, priority);
+        newProject.addToSidebar();
+        newProject.display();
 
         const $addTaskButton = document.querySelector('.add-task-button');
         const taskInput = document.getElementById('taskInput');
         $addTaskButton.addEventListener('click', () => {
-            addTask(taskInput.value);
+            newProject.addTask(taskInput.value);
         })
     });
 });
