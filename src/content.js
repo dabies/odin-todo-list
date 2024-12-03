@@ -1,4 +1,3 @@
-import { format } from 'date-fns'
 //cache DOM
 const $contentDiv = document.querySelector('.content');
 const $sidebarDiv = document.querySelector('.sidebar');
@@ -69,6 +68,7 @@ function displayNewProjectForm() {
     $contentDiv.appendChild($newProjectDiv);
 };
 
+//function to clear content div
 function clearContent() {
     let $contentDiv = document.querySelector('.content');
     while ($contentDiv.firstChild) {
@@ -76,6 +76,7 @@ function clearContent() {
     }
 }
 
+//function that reads priority and sets color
 function setPriorityColor(priority) {
     if (priority === 'Low') {
         return 'lightgreen';
@@ -86,11 +87,14 @@ function setPriorityColor(priority) {
     }
 }
 
+//function to clear input in to do list 
 function clearInput() {
     document.getElementById('taskInput').value = '';
 }
 
+// class to handle projects
 class Project {
+    //constructor that creates page for project
     constructor(title, date, priority) {
         this.title = title;
         this.date = date;
@@ -105,7 +109,7 @@ class Project {
         this.projectSidebarBtn = document.createElement('button');
     }
 
-    //create elements
+    //create elements, and assign attributes
     display() {
         this.titleHeader.textContent = `${this.title}`;
         this.dateHeader.textContent = `Due Date: ${this.date}`;
@@ -119,6 +123,8 @@ class Project {
         this.addingDivButton.textContent = 'Add';
         this.addingDivButton.classList.add('add-task-button');
         this.toDoList.classList.add('to-do-list');
+
+        //event listener to erase all project content
         let deleteBtn = document.createElement('button');
         deleteBtn.classList.add('delete');
         deleteBtn.textContent = 'Remove Project';
@@ -139,18 +145,13 @@ class Project {
     addToSidebar() {
         //values of new project
         let nameValue = this.title;
-        let dateValue = format(this.date, 'MM-dd-yyyy');
         let priorityValue = this.priority;
-    
+        
+        //using values for sidebar functionality
         this.projectSidebarBtn.textContent = `${nameValue}`;
-        if (priorityValue === 'Low') {
-            this.projectSidebarBtn.style.backgroundColor = 'lightgreen';
-        } else if (priorityValue === 'Medium') {
-            this.projectSidebarBtn.style.backgroundColor = 'yellow';
-        } else {
-            this.projectSidebarBtn.style.backgroundColor = 'indianred';
-        }
+        this.projectSidebarBtn.style.backgroundColor = setPriorityColor(priorityValue);
 
+        //event listener to display project when clicked on sidebar
         this.projectSidebarBtn.addEventListener('click', () => {
             clearContent();
             this.display();
@@ -159,6 +160,7 @@ class Project {
         $projectList.appendChild(this.projectSidebarBtn);
     }
 
+    //function to add task in project page
     addTask(taskName) {
         if (taskName === '') {
             clearInput();
@@ -179,16 +181,19 @@ class Project {
         }
     }
 
+    //function to erase project from sidebar and content div
     eraseAll() {
         clearContent();
         $projectList.removeChild(this.projectSidebarBtn);
     }
 }
 
+//function to remove task by removing from parent element
 function removeTask(event) {
     event.target.parentElement.parentElement.removeChild(event.target.parentElement);
 }
 
+//functipon to add checked class toggle to list elements
 function addCheckedToggle(node) {
     node.addEventListener('click', function(ev) {
         if (ev.target.tagName === 'LI') {
