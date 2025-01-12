@@ -1,6 +1,5 @@
 //cache DOM
 const $contentDiv = document.querySelector('.content');
-const $sidebarDiv = document.querySelector('.sidebar');
 const $projectList = document.querySelector('.projects');
 
 //function for creating project display for
